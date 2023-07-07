@@ -1,0 +1,7 @@
+#+title: A project for extracting OS-specific information in a terminal
+* State of the project
+This project is an on-going work as the language powers it. For more info you should monitor the develop of _*Zig-Lang*_ [[https://github.com/ziglang/zig][(here)]].
+* Goals
+- [ ] add some insights for the kernel specs
+- [ ] get OS-specific information from the CLI in hand (cross-platform prefered)
+- [ ] support windows
