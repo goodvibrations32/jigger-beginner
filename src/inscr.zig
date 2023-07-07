@@ -27,9 +27,6 @@ const kernel_info = switch (std.mem.eql(u8, os_message, "GNU/linux")){
         .range
         .max
 };
-fn adding(a: i64, b: i64) i64 {
-    return a + b;
-}
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
