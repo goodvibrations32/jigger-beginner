@@ -1,3 +1,7 @@
+//! =================== Main entrance for now... ================================
+//! This script aims to gather information from the system is running on.
+//! Zig allows for cross-platform executions and may handling some situations
+//! better than other system languages for embedding to micro-processors.
 const std = @import("std");
 const builtin = @import("builtin");
 
