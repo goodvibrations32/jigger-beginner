@@ -2,44 +2,32 @@ const builtin = @import("builtin");
 const std = @import("std");
 
 const os_message = switch (builtin.target.os.tag) {
-    .linux => "E.T. HOME",
-    else => "install linux please",
+    .linux => "GNU/linux",
+    .windows => "Windows OS, install linux please",
+    else => @panic(std.PackedIntArray),
 };
 
+const kernel_info = switch (std.mem.eql(u8, os_message, "GNU/linux")){
+    true => builtin
+        .target
+        .os
+        .version_range
+        .linux
+        .range
+        .max,
+    false => @panic("hey crap")
+};
 fn adding(a: i64, b: i64) i64 {
     return a + b;
 }
-
-/// TODO first problem  encountered.... string comparison
-// fn handle_kernel_version() !bool {
-//     // os_type = os_message;
-//     var kernel_ver: bool = true;
-//     const os_state = try std.testing.expectEqualStrings(os_message, "E.T. HOME");
-//     if (?os_state) {
-//         kernel_ver = builtin
-//             .target
-//             .os
-//             .version_range
-//             .linux
-//             .range
-//             .max;
-//     }
-//     return kernel_ver;
-// }
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("\n\nAll your {s} are belong to us.\n\n", .{"codebase"});
 
-    std.debug.print("where am at?!\n{s}\nKernel version {}\n\n", .{
+    std.debug.print("OS information:    \n{s}\nKernel version {}\n\n", .{
         os_message,
-         builtin
-            .target
-            .os
-            .version_range
-            .linux
-            .range
-            .max
+        kernel_info
     });
     // std.debug.print("where am at?!\n{s}\n\n", .{os_message});
     var my_shit: i64 = 5;
