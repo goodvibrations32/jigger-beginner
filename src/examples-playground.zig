@@ -38,7 +38,7 @@ pub fn main() !void {
         .{add_two,
           something,
           resultsss,
-          func_res });
+          func_res});
     try bw.flush(); // don't forget to flush!
 }
 test "simple test" {
