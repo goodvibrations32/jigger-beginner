@@ -12,6 +12,7 @@ test "alloc" {
     try expct(memory.len == 100);
     try expct(@TypeOf(memory) == []u8);
 }
+
 test "arena alloc" {
     // allocate many times (var) but free ONCE!!
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -22,23 +23,23 @@ test "arena alloc" {
     _ = try alloc.alloc(u8, 1);
     _ = try alloc.alloc(u8, 100);
     var @"_" = try alloc.alloc(u8, 1000);
-    std.debug.print("lendth is {d} ", .{@"_".len,
-                                        });
+    std.debug.print("lendth is {d} ", .{
+        @"_".len,
+    });
 }
+
 test "single item allocation" {
     const b = try std.heap.page_allocator.create(u8);
     defer std.heap.page_allocator.destroy(b);
     b.* = 128;
 }
+
 test "gp case" {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const alloctr = gpa.allocator();
     defer {
         const deinit_status = gpa.deinit();
-        if (deinit_status == .leak) (expct(false)
-                                         catch @panic(
-                                             "Test failed"
-        ));
+        if (deinit_status == .leak) (expct(false) catch @panic("Test failed"));
     }
     const bts = try alloctr.alloc(u8, 100);
     defer alloctr.free(bts);
@@ -53,14 +54,13 @@ fn ticker(step: u8) void {
 var tick: isize = 0;
 
 test "Threads for my first time" {
-    var thrd = try std.Thread.spawn(.{}, ticker, .{@as(u8, 1)});
-    std.debug.print("threads on system: {!} \n {d}",
-                    .{std.Thread.getCpuCount(),
-                      std.Thread.getCurrentId()});
+    var thrd = try std.Thread.spawn(.{}, ticker, .{@as(u8, 24)});
+    std.debug.print("\nThreads on system: {!}", .{
+        std.Thread.getCpuCount(),
+    });
 
-    _ = thrd;
     try expct(tick == 0);
-    std.time.sleep(2 * std.time.ns_per_s / 2);
-    std.debug.print("\n{d} ", .{tick,});
-
+    std.time.sleep(6 * std.time.ns_per_s);
+    thrd.detach();
+    std.debug.print("\nTicks:{d}\nThread Id:{} ", .{ tick, thrd.getHandle() });
 }

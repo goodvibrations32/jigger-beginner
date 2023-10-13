@@ -30,6 +30,7 @@ const Shape = struct {
     fn multi (self: *Shape, other: Shape) *Shape {
         self.width = self.width * other.width;
         self.height = self.height * other.height;
+        self.depth = self.depth * other.depth;
         return self;
     }
 };
@@ -39,10 +40,11 @@ pub fn main () !void {
     var rectangle = Shape { .width=1, .height=1 };
     const dim = MeasUnit{.cm=true};
     std.debug.print("multiply 2 shapes (unary)\n{}", .{rectangle.multi(unary)});
-    std.debug.print("\nfrom meters to centimeters\n{} unit:{}",
+    std.debug.print("\nfrom meters to centimeters\n{}\nunit:{}",
                     .{rectangle.getSideDim(dim), dim});
 
     var rect = Shape { .width=1, .height=1 };
-    std.debug.print("\n2D area = {} ^2 ", .{rect.calcArea(false)});
+    std.debug.print("\n2D area = {} {}^2 ", .{rect.calcArea(false),
+                                              dim});
 
 }
