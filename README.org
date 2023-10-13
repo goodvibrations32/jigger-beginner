@@ -1,4 +1,5 @@
 #+title: A project for extracting OS-specific information in a terminal
+[[file:./ziggy-learn.png]]
 * State of the project
 This project is an on-going work as the language powers it. For more info you should monitor the develop of **Zig-Lang** [[https://github.com/ziglang/zig][(here)]].
 * Goals
